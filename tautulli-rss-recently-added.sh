@@ -14,7 +14,7 @@
 ##           \/        \/        \/       \/     \/         |__|     
 ##    _________________________________________________________________.
 ##                                        | For Recently Added Content |
-##										   ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+##
 ##                                                              [ v1.0 ]
 ##
 ##	Created by: Josh McIntyre |  joshlee[at]hotmail.ca
@@ -33,7 +33,7 @@
 ##	Write a description if you wish.
 ##	Click the 'Triggers' tab, choose 'Recently Added'
 ##	Click the 'Arguments' tab, choose 'Recently Added' and add this line:
-##  <movie>{filename} {media_type!c} {title} {year} {rating} {poster_url} {imdb_url} {summary} {genres} {actors} {directors} {plex_url} {tagline}</movie><episode>{filename} {media_type!c} {title} {season_num00} {episode_num00} {poster_url} {imdb_url} {summary} {genres} {actors} {directors} {plex_url} {tagline}</episode>
+## 	<movie>{filename} {media_type!c} {title} {year} {rating} {poster_url} {imdb_url} {summary} {genres} {actors} {directors} {plex_url} {tagline}</movie><episode>{filename} {media_type!c} {title} {season_num00} {episode_num00} {poster_url} {imdb_url} {summary} {genres} {actors} {directors} {plex_url} {tagline}</episode>
 ##
 ##	If you want Images in your RSS
 ##	You need an Imgur.com account and also to register for a new application.
@@ -51,11 +51,11 @@
 
 
 ## XML_File: RSS File Location..
-	XML_File="/var/www/html/rss/vault-plex.xml"
+	XML_File="/var/www/html/rss/rss.xml"
 ## TMPFOLDER: Folder location for temp file needed for the script.
-	TMPFOLDER="/tmpfs"
+	TMPFOLDER="/tmps"
 ## RSSTITLE: Title of RSS Feed.
-	RSSTITLE="VAULT: Plex Server"
+	RSSTITLE="My Plex Server"
 ## RSSLINK: URL for RSS Feed.
 	RSSLINK="https://app.plex.tv/desktop"
 ## RSSDESCRIPTION: Descrption of RSS Feed.
@@ -199,7 +199,7 @@ while true; do
 			if [ "$Media_Type" = "Movie" ]; then
 				sed -i "${SED_LINE_TITLE}i $Title_Open$CDATA_Open<b>$Media_Title</b> ($Media_Year_or_Season)$CDATA_Close$Title_Close" $TMP_XML_File
 			else
-				sed -i "${SED_LINE_TITLE}i $Title_Open$CDATA_Open<b>$Media_Title</b> $Media_Year_or_Season-E$Media_Rating_or_Episode$CDATA_Close$Title_Close" $TMP_XML_File
+				sed -i "${SED_LINE_TITLE}i $Title_Open$CDATA_Open<b>$Media_Title</b> S$Media_Year_or_Season-E$Media_Rating_or_Episode$CDATA_Close$Title_Close" $TMP_XML_File
 			fi
 
 					if [ $LINK_IMDB_OR_PLEX = "1" ]; then
