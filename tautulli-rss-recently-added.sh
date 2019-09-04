@@ -35,7 +35,7 @@
 ##	Click the 'Arguments' tab, choose 'Recently Added' and add this line:
 ## 	<movie>{filename} {media_type!c} {title} {year} {rating} {poster_url} {imdb_url} {summary} {genres} {actors} {directors} {plex_url} {tagline}</movie><episode>{filename} {media_type!c} {title} {season_num00} {episode_num00} {poster_url} {imdb_url} {summary} {genres} {actors} {directors} {plex_url} {tagline}</episode>
 ##
-##	If you want Images in your RSS
+##	If you want Images in your RSS...
 ##	You need an Imgur.com account and also to register for a new application.
 ##	Register a new application here: https://api.imgur.com/oauth2/addclient
 ##	Enter an Application Name, Email, and Description, and select the option "OAuth 2 authorization without a callback URL".
