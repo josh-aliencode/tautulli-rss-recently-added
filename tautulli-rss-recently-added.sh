@@ -17,7 +17,7 @@
 ##
 ##                                                              [ v1.0 ]
 ##
-##	Created by: Josh McIntyre |  joshlee[at]hotmail.ca
+##	Created by: Josh McIntyre - joshlee[at]hotmail.ca
 ##	Facebook: https://www.facebook.com/joshua.lee.mcintyre
 ##	Twitter: https://twitter.com/excidius
 ##                             
