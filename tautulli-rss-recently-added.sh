@@ -53,7 +53,7 @@
 ## XML_File: RSS File Location..
 	XML_File="/var/www/html/rss/rss.xml"
 ## TMPFOLDER: Folder location for temp file needed for the script.
-	TMPFOLDER="/tmp" 
+	TMPFOLDER="/tmp"
 ## RSSTITLE: Title of RSS Feed.
 	RSSTITLE="My Plex Server"
 ## RSSLINK: URL for RSS Feed.
