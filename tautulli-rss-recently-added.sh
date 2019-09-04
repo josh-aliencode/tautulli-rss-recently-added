@@ -45,6 +45,7 @@
 ##	‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 ##	Nothing will show up right away, it'll only add items to your RSS as Tautulli discovers new content added to your PLEX server.
 ##	Only Movies and Episodes will be put into the feed. Deleted items in your PLEX library will remain in the feed.
+##	If you XML File doesn't create itself, check your loaction and if you have permissions.
 ##	If by some chance your RSS/XML gets corrupt.. Just delete the XML file and let the script create a new one.
 ##	I've only tested this script in an Ubuntu Server enviroment. It should be compatible with most linux distros.
 
