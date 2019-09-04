@@ -33,7 +33,7 @@
 ##	Write a description if you wish.
 ##	Click the 'Triggers' tab, choose 'Recently Added'
 ##	Click the 'Arguments' tab, choose 'Recently Added' and add this line:
-##	{filename} {media_type!c}<movie> {title} {year} {rating} </movie><episode> {show_name} {season_num00} {episode_num00} </episode>{poster_url} {imdb_url} {summary} {genres} {actors} {directors} {plex_url} {tagline}
+##	<movie>{filename} {media_type!c} {title} {year} {rating} {poster_url} {imdb_url} {summary} {genres} {actors} {directors} {plex_url} {tagline}</movie><episode>{filename} {media_type!c} {title} {season_num00} {episode_num00} {poster_url} {imdb_url} {summary} {genres} {actors} {directors} {plex_url} {tagline}</episode>
 ##
 ##	If you want Images in your RSS
 ##	You need an Imgur.com account and also to register for a new application.
