@@ -17,7 +17,7 @@
 ##
 ##                                                              [ v1.0 ]
 ##
-##	Created by: Josh McIntyre - joshlee[at]hotmail.ca
+##	Created by: Josh McIntyre |  joshlee[at]hotmail.ca
 ##	Facebook: https://www.facebook.com/joshua.lee.mcintyre
 ##	Twitter: https://twitter.com/excidius
 ##                             
@@ -45,7 +45,7 @@
 ##	‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 ##	Nothing will show up right away, it'll only add items to your RSS as Tautulli discovers new content added to your PLEX server.
 ##	Only Movies and Episodes will be put into the feed. Deleted items in your PLEX library will remain in the feed.
-##	If your XML File doesn't create itself, check your location and see if Tautulli has permissions to write there.
+##	If your XML File doesn't create itself, check your location and see if you have permissions.
 ##	If by some chance your RSS/XML gets corrupt.. Just delete the XML file and let the script create a new one.
 ##	I've only tested this script in an Ubuntu Server enviroment. It should be compatible with most linux distros.
 
@@ -103,6 +103,8 @@ Media_Tagline=${13}
 
 Date=$(date -R)
 IMG_Link='<img src="'"$Media_Poster"'" alt="'"$Media_Filename"'">'
+Google_Keyword=$(echo "$Media_Title $Media_Year_or_Season" | sed 's/[ ._-]/+/g')
+Google='https://www.google.com/search?q='"$Google_Keyword"'+imdb&btnI'
 TMP_XML_File=$(mktemp $TMPFOLDER/rss.xml.XXXXXXXXX.tmp)
 SED_LINE_ITEMO="9"
 SED_LINE_TITLE="10"
@@ -138,7 +140,7 @@ while true; do
 
 	else
 
-		# Create temporary Lock_File to prevent the script running semitaneously
+		# Create temporary Lock_File to prevent the script from running multiple instances.
 		printf "Writing lockfile to $Lock_File\n"
 		touch $Lock_File
 		printf "Lockfile created.\n\n"
@@ -151,7 +153,7 @@ while true; do
 			printf '<rss version="2.0">\n' >> "$TMP_XML_File"
 			printf "<channel>\n" >> "$TMP_XML_File"
 			printf "$Title_Open$CDATA_Open$RSSTITLE$CDATA_Close$Title_Close\n" >> "$TMP_XML_File"
-			printf "$Link_Open$RSSLINK$Link_Close\n" >> "$TMP_XML_File"
+			printf "$Link_Open$CDATA_Open$RSSLINK$Link_Close$CDATA_Close\n" >> "$TMP_XML_File"
 			printf "$Description_Open$CDATA_Open$RSSDESCRIPTION$CDATA_Close$Description_Close\n" >> "$TMP_XML_File"
 			printf "$lastBuildDate_Open$Date$lastBuildDate_Close\n" >> "$TMP_XML_File"
 			printf "<language>en</language>\n" >> "$TMP_XML_File"
@@ -187,7 +189,7 @@ while true; do
 						fi
 
 							if [ -z "$Media_IMDB_URL" ]; then
-								Media_IMDB_URL="https://www.imdb.com"
+								Media_IMDB_URL="$Google"
 							fi
 
 								if [ -z "$Media_PLEX_URL" ]; then
@@ -204,9 +206,9 @@ while true; do
 			fi
 
 					if [ $LINK_IMDB_OR_PLEX = "1" ]; then
-						sed -i "${SED_LINE_LINK}i $Link_Open$Media_IMDB_URL$Link_Close" $TMP_XML_File
+						sed -i "${SED_LINE_LINK}i $Link_Open$CDATA_Open$Media_IMDB_URL$CDATA_Close$Link_Close" $TMP_XML_File
 					else
-						sed -i "${SED_LINE_LINK}i $Link_Open$Media_PLEX_URL$Link_Close" $TMP_XML_File
+						sed -i "${SED_LINE_LINK}i $Link_Open$CDATA_Open$Media_PLEX_URL$CDATA_Close$Link_Close" $TMP_XML_File
 					fi
 
 					sed -i "${SED_LINE_PUBDATE}i $pubDate_Open$Date$pubDate_Close" $TMP_XML_File
@@ -228,8 +230,7 @@ while true; do
 					printf "Added item: $Media_Filename\n"
 
 					sed -i "/lastBuildDate/d" "$TMP_XML_File"
-					sed -i "7i $lastBuildDate_Open$Date$lastBuildDate_Close" $TMP_XML_File
-			
+					sed -i "7i $lastBuildDate_Open$Date$lastBuildDate_Close" $TMP_XML_File		
 
 			## Check if XML File Needs to be trimmed.
 			XML_File_Line_Count=$(grep -c ".*" $TMP_XML_File)
