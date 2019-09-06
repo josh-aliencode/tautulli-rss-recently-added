@@ -15,7 +15,7 @@
 ##    _________________________________________________________________.
 ##                                        | For Recently Added Content |
 ##
-##                                                              [ v1.0 ]
+##                                                              [ v1.1 ]
 ##
 ##	Created by: Josh McIntyre |  joshlee[at]hotmail.ca
 ##	Facebook: https://www.facebook.com/joshua.lee.mcintyre
@@ -103,8 +103,6 @@ Media_Tagline=${13}
 
 Date=$(date -R)
 IMG_Link='<img src="'"$Media_Poster"'" alt="'"$Media_Filename"'">'
-Google_Keyword=$(echo "$Media_Title $Media_Year_or_Season" | sed 's/[ ._-]/+/g')
-Google='https://www.google.com/search?q='"$Google_Keyword"'+imdb&btnI'
 TMP_XML_File=$(mktemp $TMPFOLDER/rss.xml.XXXXXXXXX.tmp)
 SED_LINE_ITEMO="9"
 SED_LINE_TITLE="10"
@@ -132,7 +130,7 @@ while true; do
 	# Check if Lock_File exists
 	if [ -e "$Lock_File" ]; then
 
-		# Script is BUSY
+		# Script is BUSY!
 		printf "${RED}Failed!${NOCOLOR} script is busy!\n"
 		sleep 1
 		printf "Trying again...\n\n"
@@ -189,7 +187,14 @@ while true; do
 						fi
 
 							if [ -z "$Media_IMDB_URL" ]; then
-								Media_IMDB_URL="$Google"
+								if [ "$Media_Type" = "Movie" ]; then
+									Google_Keyword=$(echo "$Media_Title $Media_Year_or_Season" | sed 's/[^-[:alnum:]]/+/g' | tr -s '+')
+									Google='https://www.google.com/search?q='"$Google_Keyword"'+movie+imdb&btnI'
+								else
+									Google_Keyword=$(echo "$Media_Title" | sed 's/[^-[:alnum:]]/+/g' | tr -s '+')
+									Google='https://www.google.com/search?q='"$Google_Keyword"'+tv+imdb&btnI'
+								fi
+									Media_IMDB_URL="$Google"
 							fi
 
 								if [ -z "$Media_PLEX_URL" ]; then
@@ -220,9 +225,9 @@ while true; do
 				fi
 
 			if [ "$Media_Type" = "Movie" ]; then
-				sed -i "${SED_LINE_DESCRIPTION}i $Description_Open$CDATA_Open$IMG_Link$Media_Rating_or_Episode$Pref_SUM$Media_Genre$Media_Actors$Media_Director$CDATA_Close$Description_Close" $TMP_XML_File
+				sed -i "${SED_LINE_DESCRIPTION}i $Description_Open$CDATA_Open$IMG_Link<p>$Media_Rating_or_Episode$Pref_SUM$Media_Genre$Media_Actors$Media_Director</p>$CDATA_Close$Description_Close" $TMP_XML_File
 			else
-				sed -i "${SED_LINE_DESCRIPTION}i $Description_Open$CDATA_Open$IMG_Link$Pref_SUM$Media_Genre$Media_Actors$Media_Director$CDATA_Close$Description_Close" $TMP_XML_File
+				sed -i "${SED_LINE_DESCRIPTION}i $Description_Open$CDATA_Open$IMG_Link<p>$Pref_SUM$Media_Genre$Media_Actors$Media_Director</p>$CDATA_Close$Description_Close" $TMP_XML_File
 			fi
 
 					sed -i "${SED_LINE_ITEMC}i $Item_Close" $TMP_XML_File
