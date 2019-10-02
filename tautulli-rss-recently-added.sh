@@ -1,17 +1,17 @@
 #!/bin/sh
 ##
-##  ________________   ____ __________________ ___.____    .____    .___ 
+##  ________________   ____ __________________ ___.____    .____    .___
 ##  \__    ___/  _  \ |    |   \__    ___/    |   \    |   |    |   |   |
 ##    |    | /  /_\  \|    |   / |    |  |    |   /    |   |    |   |   |
 ##    |    |/    |    \    |  /  |    |  |    |  /|    |___|    |___|   |
 ##    |____|\____|__  /______/   |____|  |______/ |_______ \_______ \___|
-##                    \/                                    \/       \/  
-##   __________  _________ _________                     .__        __   
-##   \______   \/   _____//   _____/   ______ ___________|__|______/  |_ 
+##                    \/                                    \/       \/
+##   __________  _________ _________                     .__        __
+##   \______   \/   _____//   _____/   ______ ___________|__|______/  |_
 ##    |       _/\_____  \ \_____  \   /  ___// ___\_  __ \  \____ \   __\
-##    |    |   \/        \/        \  \___ \\  \___|  | \/  |  |_> >  |  
-##    |____|_  /_______  /_______  / /____  >\___  >__|  |__|   __/|__|  
-##           \/        \/        \/       \/     \/         |__|     
+##    |    |   \/        \/        \  \___ \\  \___|  | \/  |  |_> >  |
+##    |____|_  /_______  /_______  / /____  >\___  >__|  |__|   __/|__|
+##           \/        \/        \/       \/     \/         |__|
 ##    _________________________________________________________________.
 ##                                        | For Recently Added Content |
 ##
@@ -20,7 +20,7 @@
 ##	Created by: Josh McIntyre |  joshlee[at]hotmail.ca
 ##	Facebook: https://www.facebook.com/joshua.lee.mcintyre
 ##	Twitter: https://twitter.com/excidius
-##                             
+##
 ##	____________
 ##	INSTALLATION
 ##	‾‾‾‾‾‾‾‾‾‾‾‾
@@ -118,6 +118,11 @@ NOCOLOR=`tput sgr0`
 
 printf "Running script...\n\n"
 
+	if [ $# -eq 0 ]; then
+		echo "No arguments!\nExiting..\n"
+		exit 0
+	fi
+
 ## Review RSS Settings in terminal.
 	printf "XML file: $XML_File\n\n"
 	printf "RSS Title: $RSSTITLE\n"
@@ -144,7 +149,14 @@ while true; do
 		printf "Lockfile created.\n\n"
 
 		if [ -e "$XML_File" ]; then
-			cp -f $XML_File $TMP_XML_File
+			if [ -w "$XML_File" ]; then
+				cp -f $XML_File $TMP_XML_File
+				chmod 750 $TMP_XML_File
+			else
+				printf "XML File is not writeable! Check permissions!\n\n"
+				rm $Lock_File
+				exit 0
+			fi
 		else
 			## No XML yet.. Create one.
 			printf '<?xml version="1.0" encoding="UTF-8" ?>\n' > "$TMP_XML_File"
@@ -217,7 +229,7 @@ while true; do
 					fi
 
 					sed -i "${SED_LINE_PUBDATE}i $pubDate_Open$Date$pubDate_Close" $TMP_XML_File
-				
+
 				if [ $SUMMARY_OR_TAGLINE = "1" ]; then
 					Pref_SUM="$Media_Summary"
 				else
@@ -235,7 +247,7 @@ while true; do
 					printf "Added item: $Media_Filename\n"
 
 					sed -i "/lastBuildDate/d" "$TMP_XML_File"
-					sed -i "7i $lastBuildDate_Open$Date$lastBuildDate_Close" $TMP_XML_File		
+					sed -i "7i $lastBuildDate_Open$Date$lastBuildDate_Close" $TMP_XML_File
 
 			## Check if XML File Needs to be trimmed.
 			XML_File_Line_Count=$(grep -c ".*" $TMP_XML_File)
