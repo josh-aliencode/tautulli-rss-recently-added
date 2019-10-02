@@ -163,7 +163,7 @@ while true; do
 			printf '<rss version="2.0">\n' >> "$TMP_XML_File"
 			printf "<channel>\n" >> "$TMP_XML_File"
 			printf "$Title_Open$CDATA_Open$RSSTITLE$CDATA_Close$Title_Close\n" >> "$TMP_XML_File"
-			printf "$Link_Open$CDATA_Open$RSSLINK$Link_Close$CDATA_Close\n" >> "$TMP_XML_File"
+			printf "$Link_Open$CDATA_Open$RSSLINK$CDATA_Close$Link_Close\n" >> "$TMP_XML_File"
 			printf "$Description_Open$CDATA_Open$RSSDESCRIPTION$CDATA_Close$Description_Close\n" >> "$TMP_XML_File"
 			printf "$lastBuildDate_Open$Date$lastBuildDate_Close\n" >> "$TMP_XML_File"
 			printf "<language>en</language>\n" >> "$TMP_XML_File"
