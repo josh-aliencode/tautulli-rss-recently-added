@@ -261,6 +261,7 @@ while true; do
 
 				## Create XML from temporary file.
 				mv -f $TMP_XML_File $XML_File
+				chmod 775 $XML_File
 
 		fi
 
