@@ -206,7 +206,7 @@ while true; do
 									Google_Keyword=$(echo "$Media_Title" | sed 's/[^-[:alnum:]]/+/g' | tr -s '+')
 									Google='https://www.google.com/search?q='"$Google_Keyword"'+tv+imdb&btnI'
 								fi
-									Media_IMDB_URL="$Google"
+									Media_IMDB_URL="$CDATA_Open$Google$CDATA_Close"
 							fi
 
 								if [ -z "$Media_PLEX_URL" ]; then
