@@ -163,7 +163,7 @@ while true; do
 			printf '<rss version="2.0">\n' >> "$TMP_XML_File"
 			printf "<channel>\n" >> "$TMP_XML_File"
 			printf "$Title_Open$CDATA_Open$RSSTITLE$CDATA_Close$Title_Close\n" >> "$TMP_XML_File"
-			printf "$Link_Open$CDATA_Open$RSSLINK$CDATA_Close$Link_Close\n" >> "$TMP_XML_File"
+			printf "$Link_Open$RSSLINK$Link_Close\n" >> "$TMP_XML_File"
 			printf "$Description_Open$CDATA_Open$RSSDESCRIPTION$CDATA_Close$Description_Close\n" >> "$TMP_XML_File"
 			printf "$lastBuildDate_Open$Date$lastBuildDate_Close\n" >> "$TMP_XML_File"
 			printf "<language>en</language>\n" >> "$TMP_XML_File"
@@ -223,9 +223,9 @@ while true; do
 			fi
 
 					if [ $LINK_IMDB_OR_PLEX = "1" ]; then
-						sed -i "${SED_LINE_LINK}i $Link_Open$CDATA_Open$Media_IMDB_URL$CDATA_Close$Link_Close" $TMP_XML_File
+						sed -i "${SED_LINE_LINK}i $Link_Open$Media_IMDB_URL$Link_Close" $TMP_XML_File
 					else
-						sed -i "${SED_LINE_LINK}i $Link_Open$CDATA_Open$Media_PLEX_URL$CDATA_Close$Link_Close" $TMP_XML_File
+						sed -i "${SED_LINE_LINK}i $Link_Open$Media_PLEX_URL$Link_Close" $TMP_XML_File
 					fi
 
 					sed -i "${SED_LINE_PUBDATE}i $pubDate_Open$Date$pubDate_Close" $TMP_XML_File
