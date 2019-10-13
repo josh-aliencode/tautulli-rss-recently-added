@@ -213,11 +213,15 @@ while true; do
 									Media_PLEX_URL="https://app.plex.tv/desktop"
 								fi
 
-								if [ -z "$Media_Year_or_Season" ]; then
-									if [ "$Media_Type" = "Movie" ]; then
-										Media_Year_or_Season="XXXX"
+									if [ -z "$Media_Year_or_Season" ]; then
+										if [ "$Media_Type" = "Movie" ]; then
+											Media_Year_or_Season="XXXX"
+										fi
 									fi
-								fi
+
+										if [ -z "$Media_Summary" ]; then
+											Media_Summary="No Information."
+										fi
 
 			## Write Item to XML. Also check if Movie or TVSHOW.
 			sed -i "${SED_LINE_ITEMO}i $Item_Open" $TMP_XML_File
