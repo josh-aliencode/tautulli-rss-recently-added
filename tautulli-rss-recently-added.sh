@@ -222,6 +222,9 @@ while true; do
 										if [ -z "$Media_Summary" ]; then
 											Media_Summary="No Information."
 										fi
+										if [ -z "$Media_Tagline" ]; then
+											Media_Tagline="No Information."
+										fi
 
 			## Write Item to XML. Also check if Movie or TVSHOW.
 			sed -i "${SED_LINE_ITEMO}i $Item_Open" $TMP_XML_File
