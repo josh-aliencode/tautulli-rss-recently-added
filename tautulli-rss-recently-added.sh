@@ -219,10 +219,10 @@ while true; do
 										fi
 									fi
 
-										if [ -z "$Media_Summary" ]; then
+										if [ -z "$Media_Summary" ] && [ -z "$Media_Genre" ] && [ -z "$Media_Actors" ] && [ -z "$Media_Director" ]; then
 											Media_Summary="No Information."
 										fi
-										if [ -z "$Media_Tagline" ]; then
+										if [ -z "$Media_Tagline" ] && [ -z "$Media_Genre" ] && [ -z "$Media_Actors" ] && [ -z "$Media_Director" ]; then
 											Media_Tagline="No Information."
 										fi
 
